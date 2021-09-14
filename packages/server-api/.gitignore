@@ -1,0 +1,7 @@
+node_modules
+.env
+public/avatar/*
+!public/avatar/1627984018755.jpg
+public/events_images/*
+public/qrCodes/*
+public/tickets_pdf/*

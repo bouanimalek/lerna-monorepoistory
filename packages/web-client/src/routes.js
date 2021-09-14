@@ -1,0 +1,22 @@
+export const Routes = {
+  // pages
+  Dashboard: { path: "/dashboard" },
+  Signin: { path: "/sign-in" },
+  Signup: { path: "/sign-up" },
+  ForgotPassword: { path: "/forgot-password" },
+  ResetPassword: { path: "/reset-password/:token" },
+  NotFound: { path: "/404" },
+  ServerError: { path: "/500" },
+  AddEvent: { path: "/events/create" },
+  Events: { path: "/events" },
+  EventsShow: { path: "/events/show" },
+  EventShowDetails: { path: "/events/show/:idEvent" },
+  EditEvent: { path: "/events/edit/:idEvent" },
+  Users: { path: "/users" },
+  EditUser: { path: "/users/edit/:idUser" },
+  Tags: { path: "/tags" },
+  AddTag: { path: "/tags/create" },
+  EditTag: { path: "/tags/edit/:idTag" },
+  Tickets: { path: "/tickets" },
+  EditSettings: { path: "/users/settings" },
+};

@@ -1,0 +1,109 @@
+import React, { useState } from "react";
+import AuthService from "../../services/auth.services";
+import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  Col,
+  Row,
+  Form,
+  Card,
+  Button,
+  Container,
+  InputGroup,
+} from "@themesberg/react-bootstrap";
+import { Link } from "react-router-dom";
+
+import { Routes } from "../../routes";
+import { getMultiValue } from "chartist";
+
+export default (props) => {
+  const [email, setEmail] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const isValid = () => {
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else {
+      setEmailError(null);
+      return true;
+    }
+  };
+
+  const handleResetPassword = () => {
+    const isValidate = isValid();
+    if (isValidate) {
+      AuthService.forgotPassword({ email })
+        .then((response) => {
+          toast.success(response.data.message);
+          props.history.push("/sign-in");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data.message);
+        });
+    }
+  };
+  return (
+    <main>
+      <section className="vh-lg-100 mt-4 mt-lg-0 bg-soft d-flex align-items-center">
+        <Container>
+          <Row className="justify-content-center">
+            <p className="text-center">
+              <Card.Link
+                as={Link}
+                to={Routes.Signin.path}
+                className="text-gray-700"
+              >
+                <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to
+                sign in
+              </Card.Link>
+            </p>
+            <Col
+              xs={12}
+              className="d-flex align-items-center justify-content-center"
+            >
+              <div className="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                <h3>Forgot your password?</h3>
+                <p className="mb-4">
+                  Don't fret! Just type in your email and we will send you a
+                  code to reset your password!
+                </p>
+                <Form>
+                  <div className="mb-4">
+                    <Form.Label htmlFor="email">Your Email</Form.Label>
+                    <InputGroup id="email">
+                      <Form.Control
+                        required
+                        autoFocus
+                        type="email"
+                        placeholder="john@company.com"
+                        onChange={handleEmailChange}
+                      />
+                      <div className="text-start w-100 invalid-feedback d-block">
+                        {emailError}
+                      </div>
+                    </InputGroup>
+                  </div>
+                  <Button
+                    variant="primary"
+                    type="button"
+                    onClick={handleResetPassword}
+                    className="w-100"
+                  >
+                    Recover password
+                  </Button>
+                </Form>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </main>
+  );
+};
